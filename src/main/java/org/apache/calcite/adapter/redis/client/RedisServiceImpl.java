@@ -29,7 +29,7 @@ public class RedisServiceImpl implements RedisService {
 				jedis.close();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//igonre
 		}
 
 	}

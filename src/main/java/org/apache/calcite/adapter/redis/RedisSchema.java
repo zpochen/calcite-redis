@@ -34,5 +34,13 @@ public class RedisSchema extends AbstractSchema {
     private Map<String,Table> createTableMap(){
         final ImmutableMap.Builder<String, Table> builder = ImmutableMap.builder();
 
+        if (hashTableKeys == null || hashTableKeys.isEmpty()){
+            return builder.build();
+        }
+
+        for (String key : hashTableKeys){
+            builder.put(key, new RedisScannableTable(redisService,key) );
+        }
+        return builder.build();
     }
 }
