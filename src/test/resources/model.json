@@ -18,16 +18,16 @@
  */
 {
   "version": "1.0",
-  "defaultSchema": "SALES",
+  "defaultSchema": "MYREDIS",
   "schemas": [
     {
-      "name": "SALES",
+      "name": "MYREDIS",
       "type": "custom",
       "factory": "org.apache.calcite.adapter.redis.RedisSchemaFactory",
       "operand": {
-        "host": "localhost",
+        "host": "192.168.36.104",
         "port": 6379,
-        "tables":["hash_table_key1","hash_table_key1"]
+        "tables":["POPO"]
       }
     }
   ]

@@ -39,7 +39,7 @@ public class RedisSchema extends AbstractSchema {
         }
 
         for (String key : hashTableKeys){
-            builder.put(key, new RedisScannableTable(redisService,key) );
+            builder.put(key, new RedisJsonTable(redisService,key) );
         }
         return builder.build();
     }
