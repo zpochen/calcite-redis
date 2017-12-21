@@ -1,15 +1,18 @@
 package org.apache.calcite.adapter.redis;
 
-
 import com.google.common.base.Preconditions;
+import org.apache.calcite.DataContext;
+import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
+import org.apache.calcite.schema.ScannableTable;
 import org.apache.calcite.schema.impl.AbstractTable;
+import org.apache.calcite.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RedisTable extends AbstractTable{
+public class RedisTable extends AbstractTable implements ScannableTable{
 
     private RedisTableDescription tableDescription;
 
@@ -24,14 +27,19 @@ public class RedisTable extends AbstractTable{
         List<RelDataType> types = new ArrayList<>();
         List<String> names = new ArrayList<>();
 
-        RedisTableFieldGroup tableKeyFieldGroup = tableDescription.getKey();
-        for (RedisTableFieldDescription : tableKeyFieldGroup.getFields()){
-
+        RedisTableFieldGroup tableKeyFieldGroup = tableDescription.getValue();
+        for (RedisTableFieldDescription fieldDescription: tableKeyFieldGroup.getFields()){
+            RelDataType type = relDataTypeFactory.createSqlType(fieldDescription.getType());
+            String name = fieldDescription.getName();
+            types.add(type);
+            names.add(name);
         }
 
-        relDataTypeFactory.createSqlType()
+        return relDataTypeFactory.createStructType(Pair.zip(names,types));
+    }
 
-
+    @Override
+    public Enumerable<Object[]> scan(DataContext dataContext) {
         return null;
     }
 }
